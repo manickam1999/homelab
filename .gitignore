@@ -1,0 +1,21 @@
+# Media and download files
+media-stack/movies/*
+media-stack/tv/*
+media-stack/downloads/*
+
+# Configuration directories
+media-stack/config/*
+media-stack/cache/*
+media-stack/nginx/*
+
+# Docker related
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
+
+# Keep essential files
+!media-stack/**/.gitkeep
+!media-stack/docker-compose.yml
+!media-stack/README.md
+!media-stack/.env.example
