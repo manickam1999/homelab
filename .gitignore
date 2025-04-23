@@ -32,3 +32,7 @@ tools/StirlingPDF/pipeline/
 tools/StirlingPDF/customFiles/
 tools/StirlingPDF/trainingData/
 tools/StirlingPDF/extraConfigs/
+
+# Homepage
+core/config/homepage
+core/data/db-config.json

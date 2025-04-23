@@ -19,13 +19,52 @@ services:
       - core_net
       - media_net
 
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 3000:3000
+    volumes:
+      - ./config/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - core_net
+      - media_net
+    restart: unless-stopped
+
   uptime-kuma:
     image: louislam/uptime-kuma:1
     volumes:
       - ./data:/app/data
     ports:
       - 3001:3001
+    labels:
+      - homepage.group=System
+      - homepage.name=Uptime Kuma
+      - homepage.icon=uptime-kuma
+      - homepage.href=http://localhost:3001
     restart: unless-stopped
+    networks:
+      - core_net
+      - media_net
+
+  dockge:
+    image: louislam/dockge:1
+    restart: unless-stopped
+    container_name: dockge
+    ports:
+      - 5001:5001
+    labels:
+      - homepage.group=System
+      - homepage.name=Dockge
+      - homepage.icon=docker
+      - homepage.href=http://localhost:5001
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app/data
+      - /home/rajesh/homelab:/home/rajesh/homelab
+    environment:
+      - DOCKGE_STACKS_DIR=/home/rajesh/homelab
     networks:
       - core_net
       - media_net
