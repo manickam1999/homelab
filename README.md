@@ -1,6 +1,15 @@
 # Homelab Infrastructure
 
+> 🏠 A Docker-based homelab infrastructure for self-hosted media streaming, automation, and utility services
+
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Media Server](https://img.shields.io/badge/media%20server-jellyfin-purple)](https://jellyfin.org/)
+[![Automation](https://img.shields.io/badge/automation-enabled-success)](https://sonarr.tv/)
+[![PDF Tools](https://img.shields.io/badge/tools-stirlingpdf-orange)](https://github.com/Frooodle/Stirling-PDF)
+
 A comprehensive homelab setup using Docker containers, organized into specialized stacks for different purposes.
+
+**Tags**: `homelab`, `docker`, `self-hosted`, `media-server`, `automation`, `infrastructure`, `jellyfin`, `sonarr`, `radarr`, `stirling-pdf`
 
 ## Overview
 
