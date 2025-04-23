@@ -19,3 +19,16 @@ docker-compose.override.yml
 !media-stack/docker-compose.yml
 !media-stack/README.md
 !media-stack/.env.example
+
+# Core service data
+core/data/*.db*
+core/data/screenshots/
+core/data/upload/
+core/data/docker-tls/
+
+# StirlingPDF service
+tools/StirlingPDF/logs/
+tools/StirlingPDF/pipeline/
+tools/StirlingPDF/customFiles/
+tools/StirlingPDF/trainingData/
+tools/StirlingPDF/extraConfigs/

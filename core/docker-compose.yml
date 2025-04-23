@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=${TZ}
+      - WATCHTOWER_SCHEDULE=0 0 4 * * * # Runs at 4 AM daily
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+    labels:
+      - homepage.group=System
+      - homepage.name=Watchtower
+      - homepage.icon=watchtower
+    restart: unless-stopped
+    networks:
+      - core_net
+      - media_net
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 3001:3001
+    restart: unless-stopped
+    networks:
+      - core_net
+      - media_net
+
+networks:
+  core_net:
+    name: core_net
+  media_net:
+    external: true

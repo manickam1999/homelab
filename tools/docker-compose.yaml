@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    container_name: stirling-pdf
+    ports:
+      - '8181:8080'
+    volumes:
+      - ./StirlingPDF/trainingData:/usr/share/tessdata
+      - ./StirlingPDF/extraConfigs:/configs
+      - ./StirlingPDF/customFiles:/customFiles/
+      - ./StirlingPDF/logs:/logs/W
+      - ./StirlingPDF/pipeline:/pipeline/
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - LANGS=en_GB
+    restart: unless-stopped
+    labels:
+      - homepage.group=Tools
+      - homepage.name=Stirling PDF
+      - homepage.icon=pdf
+      - homepage.href=http://localhost:8181
+    networks:
+      - tools_net
+      - core_net
+
+networks:
+  tools_net:
+    name: tools_net
+  core_net:
+    external: true

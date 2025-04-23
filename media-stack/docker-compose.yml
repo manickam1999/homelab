@@ -194,4 +194,4 @@ services:
 
 networks:
   media_net:
-    external: true
+    name: media_net
