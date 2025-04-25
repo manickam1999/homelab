@@ -38,7 +38,7 @@ services:
       - WEBUI_PORT=${WEBUI_PORT}
     volumes:
       - ./config/qbittorrent:/config
-      - ./downloads:/downloads
+      - /mnt/homelab/media-stack/downloads:/downloads
     labels:
       - homepage.group=Download
       - homepage.name=qBittorrent
@@ -64,8 +64,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/sonarr:/config
-      - ./downloads:/downloads
-      - ./tv:/tv
+      - /mnt/homelab/media-stack/downloads:/downloads
+      - /mnt/homelab/media-stack/tv:/tv
     labels:
       - homepage.group=Media
       - homepage.name=Sonarr
@@ -90,8 +90,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/radarr:/config
-      - ./downloads:/downloads
-      - ./movies:/movies
+      - /mnt/homelab/media-stack/downloads:/downloads
+      - /mnt/homelab/media-stack/movies:/movies
     labels:
       - homepage.group=Media
       - homepage.name=Radarr
@@ -149,12 +149,14 @@ services:
     ports:
       - "8096:8096"
     environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ./config/jellyfin:/config
-      - ./cache/jellyfin:/cache
-      - ./tv:/media/tv
-      - ./movies:/media/movies
+      - /mnt/homelab/media-stack/cache/jellyfin:/cache
+      - /mnt/homelab/media-stack/tv:/media/tv
+      - /mnt/homelab/media-stack/movies:/media/movies
     labels:
       - homepage.group=Media
       - homepage.name=Jellyfin
@@ -182,7 +184,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/jackett:/config
-      - ./downloads:/downloads
+      - /mnt/homelab/media-stack/downloads:/downloads
     labels:
       - homepage.group=Indexers
       - homepage.name=Jackett
@@ -195,3 +197,4 @@ services:
 networks:
   media_net:
     name: media_net
+    external: true
