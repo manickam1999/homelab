@@ -16,10 +16,12 @@ services:
       - LANGS=en_GB
     restart: unless-stopped
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pdf.rule=Host(`pdf.docker.localhost`)"
       - homepage.group=Tools
       - homepage.name=Stirling PDF
       - homepage.icon=pdf
-      - homepage.href=http://localhost:8181
+      - homepage.href=http://pdf.docker.localhost
     networks:
       - tools_net
       - core_net

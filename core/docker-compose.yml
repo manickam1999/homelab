@@ -1,5 +1,39 @@
 version: "3.8"
 services:
+  traefik:
+    image: traefik:v3.3
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      - "80:80"
+      - "9000:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - homepage.group=System
+      - homepage.name=Traefik
+      - homepage.icon=traefik
+      - homepage.href=http://localhost:9000
+    networks:
+      - core_net
+    restart: unless-stopped
+
+  whoami:
+    image: traefik/whoami
+    container_name: whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - homepage.group=System
+      - homepage.name=Whoami
+      - homepage.icon=test
+    networks:
+      - core_net
+    restart: unless-stopped
+
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
@@ -24,6 +58,13 @@ services:
     container_name: homepage
     ports:
       - 3000:3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage.rule=Host(`home.docker.localhost`)"
+      - homepage.group=System
+      - homepage.name=Homepage
+      - homepage.icon=homepage
+      - homepage.href=http://home.docker.localhost
     volumes:
       - ./config/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
@@ -34,15 +75,18 @@ services:
 
   uptime-kuma:
     image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
     volumes:
       - ./data:/app/data
     ports:
       - 3001:3001
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uptime.rule=Host(`uptime.docker.localhost`)"
       - homepage.group=System
       - homepage.name=Uptime Kuma
       - homepage.icon=uptime-kuma
-      - homepage.href=http://localhost:3001
+      - homepage.href=http://uptime.docker.localhost
     restart: unless-stopped
     networks:
       - core_net
@@ -55,10 +99,12 @@ services:
     ports:
       - 5001:5001
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dockge.rule=Host(`dockge.docker.localhost`)"
       - homepage.group=System
       - homepage.name=Dockge
       - homepage.icon=docker
-      - homepage.href=http://localhost:5001
+      - homepage.href=http://dockge.docker.localhost
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/app/data
