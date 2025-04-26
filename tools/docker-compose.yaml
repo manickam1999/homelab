@@ -26,6 +26,88 @@ services:
       - tools_net
       - core_net
 
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PASSWORD=yourpassword
+      - GUAC_USER=abc
+    volumes:
+      - ./calibre/config:/config
+      - ./calibre/books:/books
+    ports:
+      - 8084:8080
+      - 8085:8081
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.calibre-desktop.rule=Host(`calibre-desktop.docker.localhost`)"
+      - homepage.group=Tools
+      - homepage.name=Calibre Desktop
+      - homepage.icon=book-open
+      - homepage.href=http://calibre-desktop.docker.localhost
+    networks:
+      - tools_net
+      - core_net
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/mods:universal-calibre
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ./calibre/config:/config
+      - ./calibre/books:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.calibre.rule=Host(`calibre.docker.localhost`)"
+      - homepage.group=Tools
+      - homepage.name=Calibre Web
+      - homepage.icon=book
+      - homepage.href=http://calibre.docker.localhost
+    networks:
+      - tools_net
+      - core_net
+
+  calibre-web-automated-book-downloader:
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
+    container_name: calibre-downloader
+    environment:
+      - FLASK_PORT=8086
+      - LOG_LEVEL=info
+      - BOOK_LANGUAGE=en
+      - USE_BOOK_TITLE=true
+      - TZ=${TZ}
+      - APP_ENV=prod
+      - UID=${PUID}
+      - GID=${PGID}
+      - CUSTOM_SCRIPT=/scripts/process-book.sh
+    ports:
+      - 8086:8086
+    volumes:
+      - ./calibre/books:/cwa-book-ingest
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.calibre-downloader.rule=Host(`calibre-downloader.docker.localhost`)"
+      - homepage.group=Tools
+      - homepage.name=Calibre Downloader
+      - homepage.icon=download
+      - homepage.href=http://calibre-downloader.docker.localhost
+    networks:
+      - tools_net
+      - core_net
+
 networks:
   tools_net:
     name: tools_net

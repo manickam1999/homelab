@@ -1,38 +1,64 @@
+# === Media Stack Section ===
 # Media and download files
 media-stack/movies/*
 media-stack/tv/*
 media-stack/downloads/*
-
-# Configuration directories
 media-stack/config/*
 media-stack/cache/*
 media-stack/nginx/*
 
-# Docker related
+# === Docker Section ===
 .env
 .env.*
 !.env.example
 docker-compose.override.yml
 
-# Keep essential files
+# === Media Stack Exceptions ===
 !media-stack/**/.gitkeep
 !media-stack/docker-compose.yml
 !media-stack/README.md
 !media-stack/.env.example
 
-# Core service data
+# === Core Service Data ===
 core/data/*.db*
 core/data/screenshots/
 core/data/upload/
 core/data/docker-tls/
+core/config/homepage
+core/data/db-config.json
 
-# StirlingPDF service
+# === StirlingPDF Service ===
 tools/StirlingPDF/logs/
 tools/StirlingPDF/pipeline/
 tools/StirlingPDF/customFiles/
 tools/StirlingPDF/trainingData/
 tools/StirlingPDF/extraConfigs/
 
-# Homepage
-core/config/homepage
-core/data/db-config.json
+# === Calibre Service ===
+tools/calibre/books/**
+tools/calibre/config/**
+!tools/calibre/config/.gitkeep
+
+# === OS Generated Files ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# === Editor/IDE Files ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# === Temporary Files ===
+*.log
+*.tmp
+.temp/
+tmp/
