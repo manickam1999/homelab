@@ -68,6 +68,8 @@ services:
     volumes:
       - ./config/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=192.168.0.88:3000
     networks:
       - core_net
       - media_net
