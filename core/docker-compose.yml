@@ -31,7 +31,8 @@ services:
       - "traefik.http.routers.whoami.rule=Host(`whoami.home`)"
       - homepage.group=System
       - homepage.name=Whoami
-      - homepage.icon=test
+      - homepage.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/svg/dumbwhois-dark.svg
+      - homepage.href=http://whoami.home
     networks:
       - core_net
       - media_net
@@ -52,6 +53,7 @@ services:
       - homepage.group=System
       - homepage.name=Watchtower
       - homepage.icon=watchtower
+      - homepage.href=http://watchtower.home
     restart: unless-stopped
     networks:
       - core_net
@@ -112,7 +114,7 @@ services:
       - "traefik.http.routers.dockge.rule=Host(`dockge.home`)"
       - homepage.group=System
       - homepage.name=Dockge
-      - homepage.icon=docker
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/dockge.png
       - homepage.href=http://dockge.home
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -142,7 +144,7 @@ services:
       - "443:443/tcp"
     environment:
       TZ: 'Asia/Kuala_Lumpur'
-      WEBPASSWORD: 'correct horse battery staple'
+      WEBPASSWORD: 'rajesh'
       FTLCONF_dns_listeningMode: 'all'
       VIRTUAL_HOST: pi.hole
       PROXY_LOCATION: pi.hole

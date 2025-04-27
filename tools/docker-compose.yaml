@@ -20,7 +20,7 @@ services:
       - "traefik.http.routers.pdf.rule=Host(`pdf.home`)"
       - homepage.group=Tools
       - homepage.name=Stirling PDF
-      - homepage.icon=pdf
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/stirling-pdf.svg
       - homepage.href=http://pdf.home
     networks:
       - tools_net
@@ -47,7 +47,7 @@ services:
       - "traefik.http.routers.calibre-desktop.rule=Host(`calibre-desktop.home`)"
       - homepage.group=Tools
       - homepage.name=Calibre Desktop
-      - homepage.icon=book-open
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/calibre.svg
       - homepage.href=http://calibre-desktop.home
     networks:
       - tools_net
@@ -73,7 +73,7 @@ services:
       - "traefik.http.routers.calibre.rule=Host(`calibre.home`)"
       - homepage.group=Tools
       - homepage.name=Calibre Web
-      - homepage.icon=book
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/calibre-web.svg
       - homepage.href=http://calibre.home
     networks:
       - tools_net
@@ -102,7 +102,7 @@ services:
       - "traefik.http.routers.calibre-downloader.rule=Host(`calibre-downloader.home`)"
       - homepage.group=Tools
       - homepage.name=Calibre Downloader
-      - homepage.icon=download
+      - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/calibre-web-automated-book-downloader.png
       - homepage.href=http://calibre-downloader.home
     networks:
       - tools_net

@@ -155,7 +155,7 @@ services:
       - "traefik.http.routers.suggestarr.rule=Host(`suggest.home`)"
       - homepage.group=Media
       - homepage.name=Suggestarr
-      - homepage.icon=movie
+      - homepage.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/svg/antville-light.svg
       - homepage.href=http://suggest.home
     restart: unless-stopped
     networks:
