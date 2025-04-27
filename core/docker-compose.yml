@@ -155,6 +155,11 @@ services:
       - NET_ADMIN
       - SYS_NICE
     restart: unless-stopped
+    labels:
+    - homepage.group=System
+    - homepage.name=Pi-hole
+    - homepage.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/svg/pi-hole.svg
+    - homepage.href=http://192.168.0.149/admin/
 
   registry:
     image: registry:2
