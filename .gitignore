@@ -20,12 +20,19 @@ docker-compose.override.yml
 !media-stack/.env.example
 
 # === Core Service Data ===
-core/data/*.db*
-core/data/screenshots/
-core/data/upload/
-core/data/docker-tls/
-core/config/homepage
-core/data/db-config.json
+core/data/
+!core/data/.gitkeep
+core/config/*
+!core/config/.gitkeep
+
+# === Pi-hole Section ===
+core/etc-pihole/*.db*
+core/etc-pihole/dhcp.leases
+core/etc-pihole/migration_backup/
+core/etc-pihole/config_backups/
+core/etc-pihole/gravity_backups/
+core/etc-pihole/listsCache/
+core/etc-pihole/
 
 # === StirlingPDF Service ===
 tools/StirlingPDF/logs/
@@ -38,6 +45,12 @@ tools/StirlingPDF/extraConfigs/
 tools/calibre/books/**
 tools/calibre/config/**
 !tools/calibre/config/.gitkeep
+
+# === Application Cache & Backups ===
+*.cache
+*.bak
+*.backup
+.cache/
 
 # === OS Generated Files ===
 .DS_Store

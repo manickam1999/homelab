@@ -14,11 +14,11 @@ services:
       - ./config/prowlarr:/config
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.docker.localhost`)"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.home`)"
       - homepage.group=Indexers
       - homepage.name=Prowlarr
       - homepage.icon=prowlarr
-      - homepage.href=http://prowlarr.docker.localhost
+      - homepage.href=http://prowlarr.home
       - homepage.widget.type=prowlarr
       - homepage.widget.url=http://prowlarr:9696
       - homepage.widget.key=${PROWLARR_API_KEY}
@@ -44,12 +44,12 @@ services:
       - /mnt/homelab/media-stack/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.qbittorrent.rule=Host(`qbit.docker.localhost`)"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qbit.home`)"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
       - homepage.group=Download
       - homepage.name=qBittorrent
       - homepage.icon=qbittorrent
-      - homepage.href=http://qbit.docker.localhost
+      - homepage.href=http://qbit.home
       - homepage.widget.type=qbittorrent
       - homepage.widget.url=http://qbittorrent:8080
       - homepage.widget.username=${QB_USERNAME}
@@ -75,11 +75,11 @@ services:
       - /mnt/homelab/media-stack/tv:/tv
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.docker.localhost`)"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.home`)"
       - homepage.group=Media
       - homepage.name=Sonarr
       - homepage.icon=sonarr
-      - homepage.href=http://sonarr.docker.localhost
+      - homepage.href=http://sonarr.home
       - homepage.widget.type=sonarr
       - homepage.widget.url=http://sonarr:8989
       - homepage.widget.key=${SONARR_API_KEY}
@@ -104,11 +104,11 @@ services:
       - /mnt/homelab/media-stack/movies:/movies
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.docker.localhost`)"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.home`)"
       - homepage.group=Media
       - homepage.name=Radarr
       - homepage.icon=radarr
-      - homepage.href=http://radarr.docker.localhost
+      - homepage.href=http://radarr.home
       - homepage.widget.type=radarr
       - homepage.widget.url=http://radarr:7878
       - homepage.widget.key=${RADARR_API_KEY}
@@ -130,11 +130,11 @@ services:
       - ./config/jellyseerr:/app/config
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.docker.localhost`)"
+      - "traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.home`)"
       - homepage.group=Media
       - homepage.name=Jellyseerr
       - homepage.icon=jellyseerr
-      - homepage.href=http://jellyseerr.docker.localhost
+      - homepage.href=http://jellyseerr.home
       - homepage.widget.type=jellyseerr
       - homepage.widget.url=http://jellyseerr:5055
       - homepage.widget.key=${JELLYSEERR_API_KEY}
@@ -152,11 +152,11 @@ services:
       - ./config/suggestarr:/app/config
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.suggestarr.rule=Host(`suggest.docker.localhost`)"
+      - "traefik.http.routers.suggestarr.rule=Host(`suggest.home`)"
       - homepage.group=Media
       - homepage.name=Suggestarr
       - homepage.icon=movie
-      - homepage.href=http://suggest.docker.localhost
+      - homepage.href=http://suggest.home
     restart: unless-stopped
     networks:
       - core_net
@@ -178,12 +178,12 @@ services:
       - /mnt/homelab/media-stack/movies:/media/movies
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.docker.localhost`)"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.home`)"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
       - homepage.group=Media
       - homepage.name=Jellyfin
       - homepage.icon=jellyfin
-      - homepage.href=http://jellyfin.docker.localhost
+      - homepage.href=http://jellyfin.home
       - homepage.widget.type=jellyfin
       - homepage.widget.url=http://jellyfin:8096
       - homepage.widget.key=${JELLYFIN_API_KEY}
@@ -210,11 +210,11 @@ services:
       - /mnt/homelab/media-stack/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jackett.rule=Host(`jackett.docker.localhost`)"
+      - "traefik.http.routers.jackett.rule=Host(`jackett.home`)"
       - homepage.group=Indexers
       - homepage.name=Jackett
       - homepage.icon=jackett
-      - homepage.href=http://jackett.docker.localhost
+      - homepage.href=http://jackett.home
     restart: unless-stopped
     networks:
       - core_net
