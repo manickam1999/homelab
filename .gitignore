@@ -46,6 +46,21 @@ tools/calibre/books/**
 tools/calibre/config/**
 !tools/calibre/config/.gitkeep
 
+# === Paperless Service ===
+tools/paperless/config/app/*
+tools/paperless/config/media/*
+tools/paperless/config/postgres/*
+tools/paperless/config/redis/*
+
+# === Tools Configuration ===
+tools/config/paperless/*
+tools/config/paperless-media/*
+tools/config/paperless-postgres/*
+tools/config/paperless-redis/*
+
+# === Registry Data ===
+core/registry-data/
+
 # === Application Cache & Backups ===
 *.cache
 *.bak

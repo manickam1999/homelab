@@ -18,7 +18,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pdf.rule=Host(`pdf.home`)"
-      - homepage.group=Tools
+      - homepage.group=Documents
       - homepage.name=Stirling PDF
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/stirling-pdf.svg
       - homepage.href=http://pdf.home
@@ -45,7 +45,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.calibre-desktop.rule=Host(`calibre-desktop.home`)"
-      - homepage.group=Tools
+      - homepage.group=Calibre
       - homepage.name=Calibre Desktop
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/calibre.svg
       - homepage.href=http://calibre-desktop.home
@@ -71,7 +71,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.calibre.rule=Host(`calibre.home`)"
-      - homepage.group=Tools
+      - homepage.group=Calibre
       - homepage.name=Calibre Web
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/calibre-web.svg
       - homepage.href=http://calibre.home
@@ -100,10 +100,74 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.calibre-downloader.rule=Host(`calibre-downloader.home`)"
-      - homepage.group=Tools
+      - homepage.group=Calibre
       - homepage.name=Calibre Downloader
       - homepage.icon=https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/calibre-web-automated-book-downloader.png
       - homepage.href=http://calibre-downloader.home
+    networks:
+      - tools_net
+      - core_net
+
+  paperless-broker:
+    image: docker.io/library/redis:7
+    container_name: paperless-redis
+    restart: unless-stopped
+    volumes:
+      - ./paperless/config/redis:/data
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    networks:
+      - tools_net
+      - core_net
+
+  paperless-db:
+    image: docker.io/library/postgres:17
+    container_name: paperless-postgres
+    restart: unless-stopped
+    volumes:
+      - ./paperless/config/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=paperless
+      - POSTGRES_USER=paperless
+      - POSTGRES_PASSWORD=paperless
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    networks:
+      - tools_net
+      - core_net
+
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless
+    restart: unless-stopped
+    depends_on:
+      - paperless-db
+      - paperless-broker
+    volumes:
+      - ./paperless/config/app:/usr/src/paperless/data
+      - ./paperless/config/media:/usr/src/paperless/media
+      - /mnt/homelab/tools/paperless/export:/usr/src/paperless/export
+      - /mnt/homelab/tools/paperless/consume:/usr/src/paperless/consume
+    environment:
+      - PAPERLESS_REDIS=redis://paperless-broker:6379
+      - PAPERLESS_DBHOST=paperless-db
+      - PAPERLESS_TIME_ZONE=${TZ}
+      - PAPERLESS_OCR_LANGUAGE=eng
+      - PAPERLESS_ADMIN_USER=admin
+      - PAPERLESS_ADMIN_PASSWORD=admin
+      - USERMAP_UID=${PUID}
+      - USERMAP_GID=${PGID}
+      - PAPERLESS_URL=http://paperless.home
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless.rule=Host(`paperless.home`)"
+      - homepage.group=Documents
+      - homepage.name=Paperless
+      - homepage.icon=paperless-ngx
+      - homepage.href=http://paperless.home
     networks:
       - tools_net
       - core_net
