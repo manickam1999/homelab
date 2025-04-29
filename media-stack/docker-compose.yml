@@ -220,6 +220,54 @@ services:
       - core_net
       - media_net
 
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    restart: unless-stopped
+    ports:
+      - "7474:7474"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config/autobrr:/config
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.autobrr.rule=Host(`autobrr.home`)"
+      - homepage.group=Indexers
+      - homepage.name=Autobrr
+      - homepage.icon=autobrr
+      - homepage.href=http://autobrr.home
+    networks:
+      - core_net
+      - media_net
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    ports:
+      - "6767:6767"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./config/bazarr:/config
+      - /mnt/homelab/media-stack/movies:/movies
+      - /mnt/homelab/media-stack/tv:/tv
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.home`)"
+      - homepage.group=Media
+      - homepage.name=Bazarr
+      - homepage.icon=bazarr
+      - homepage.href=http://bazarr.home
+    restart: unless-stopped
+    networks:
+      - core_net
+      - media_net
+
 networks:
   media_net:
     name: media_net
