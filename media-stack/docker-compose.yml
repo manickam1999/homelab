@@ -143,25 +143,6 @@ services:
       - core_net
       - media_net
 
-  suggestarr:
-    image: ciuse99/suggestarr:latest
-    container_name: suggestarr
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./config/suggestarr:/app/config
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.suggestarr.rule=Host(`suggest.home`)"
-      - homepage.group=Media
-      - homepage.name=Suggestarr
-      - homepage.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/svg/antville-light.svg
-      - homepage.href=http://suggest.home
-    restart: unless-stopped
-    networks:
-      - core_net
-      - media_net
-
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
