@@ -90,3 +90,22 @@ Thumbs.db
 *.tmp
 .temp/
 tmp/
+
+# === Firefly Section ===
+tools/firefly/.env
+tools/firefly/db
+tools/firefly/.db.env
+tools/firefly/storage/*
+
+# === Database Section ===
+core/postgres/*
+!core/postgres/.gitkeep
+
+# === Dependencies ===
+node_modules/
+package-lock.json
+yarn.lock
+
+# === DNS Configuration ===
+core/etc-dnsmasq.d/*
+!core/etc-dnsmasq.d/.gitkeep
