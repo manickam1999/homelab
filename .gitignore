@@ -109,3 +109,5 @@ yarn.lock
 # === DNS Configuration ===
 core/etc-dnsmasq.d/*
 !core/etc-dnsmasq.d/.gitkeep
+
+tools/maybe/redis

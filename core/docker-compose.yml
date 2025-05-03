@@ -94,6 +94,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.uptime.rule=Host(`uptime.home`)"
+      - homepage.group=System
       - homepage.name=Uptime Kuma
       - homepage.icon=uptime-kuma
       - homepage.href=http://uptime.home
