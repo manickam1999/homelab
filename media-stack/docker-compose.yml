@@ -41,7 +41,7 @@ services:
       - WEBUI_PORT=${WEBUI_PORT}
     volumes:
       - ./config/qbittorrent:/config
-      - /mnt/homelab/media-stack/downloads:/downloads
+      - /mnt/homelab/media-stack:/media
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.qbittorrent.rule=Host(`qbit.home`)"
@@ -71,8 +71,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/sonarr:/config
-      - /mnt/homelab/media-stack/downloads:/downloads
-      - /mnt/homelab/media-stack/tv:/tv
+      - /mnt/homelab/media-stack:/media
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.home`)"
@@ -100,8 +99,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/radarr:/config
-      - /mnt/homelab/media-stack/downloads:/downloads
-      - /mnt/homelab/media-stack/movies:/movies
+      - /mnt/homelab/media-stack:/media
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.home`)"
@@ -149,8 +147,8 @@ services:
     devices:
       - /dev/dri:/dev/dri
     group_add:
-      - "video"
-      - "render"
+      - "44"   # video
+      - "110"  # render (or your actual render GID)
     ports:
       - "8096:8096"
     environment:
@@ -160,8 +158,7 @@ services:
     volumes:
       - ./config/jellyfin:/config
       - /mnt/homelab/media-stack/cache/jellyfin:/cache
-      - /mnt/homelab/media-stack/tv:/media/tv
-      - /mnt/homelab/media-stack/movies:/media/movies
+      - /mnt/homelab/media-stack:/media
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.home`)"
@@ -193,7 +190,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/jackett:/config
-      - /mnt/homelab/media-stack/downloads:/downloads
+      - /mnt/homelab/media-stack:/media
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.home`)"
@@ -240,8 +237,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config/bazarr:/config
-      - /mnt/homelab/media-stack/movies:/movies
-      - /mnt/homelab/media-stack/tv:/tv
+      - /mnt/homelab/media-stack:/media
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bazarr.rule=Host(`bazarr.home`)"
