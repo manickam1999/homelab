@@ -133,7 +133,7 @@ services:
     image: pihole/pihole:latest
     networks:
       pihole_network:
-        ipv4_address: '192.168.0.149'
+        ipv4_address: '192.168.100.149'
     dns:
       - 8.8.8.8
       - 8.8.4.4
@@ -141,11 +141,15 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
       - "67:67/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
+      - "8053:80/tcp"
     environment:
       TZ: 'Asia/Kuala_Lumpur'
       WEBPASSWORD: 'rajesh'
+      SERVERIP: '192.168.100.149'
+      DNS_FQDN_REQUIRED: 'true'
+      DNS_BOGUS_PRIV: 'true'
+      DNSSEC: 'true'
+      INTERFACE: 'eth0'
       FTLCONF_dns_listeningMode: 'all'
       VIRTUAL_HOST: pi.hole
       PROXY_LOCATION: pi.hole
@@ -157,10 +161,13 @@ services:
       - SYS_NICE
     restart: unless-stopped
     labels:
-    - homepage.group=System
-    - homepage.name=Pi-hole
-    - homepage.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/svg/pi-hole.svg
-    - homepage.href=http://192.168.0.149/admin/
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.home`)"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+      - homepage.group=System
+      - homepage.name=Pi-hole
+      - homepage.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/svg/pi-hole.svg
+      - homepage.href=http://pihole.home/admin
 
   registry:
     image: registry:2
@@ -233,11 +240,14 @@ networks:
     driver: macvlan
     driver_opts:
       parent: enp2s0
+      macvlan_mode: bridge
     ipam:
       config:
-        - subnet: 192.168.0.0/24
-          gateway: 192.168.0.1
-          ip_range: 192.168.0.149/32
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1
+          ip_range: 192.168.100.149/32
+          aux_addresses:
+            host: 192.168.100.88
   core_net:
     name: core_net
   media_net:
