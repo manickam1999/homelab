@@ -235,6 +235,31 @@ services:
       - tools_net
     restart: unless-stopped
 
+  headscale:
+    image: headscale/headscale:latest
+    container_name: headscale
+    volumes:
+      - ./config/headscale/config:/etc/headscale
+      - ./config/headscale/lib:/var/lib/headscale
+      - ./config/headscale/run:/var/run/headscale
+    ports:
+      - "8082:8085"
+      - "9090:9090"
+    command: serve
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.headscale.rule=Host(`headscale.home`)"
+      - "traefik.http.services.headscale.loadbalancer.server.port=8085"
+      - homepage.group=System
+      - homepage.name=Headscale
+      - homepage.icon=https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tailscale.png
+      - homepage.href=http://headscale.home
+    networks:
+      - core_net
+      - media_net
+      - tools_net
+    restart: unless-stopped
+
 networks:
   pihole_network:
     driver: macvlan
